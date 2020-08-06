@@ -39,14 +39,14 @@ or
 > 'drush updatedb'
 > 'drush cache:rebuild'
 
-
 ### Docker Container
 
 **Docker Compose Build**
 
-> `docker-compose -f docker-compose.yml up --build`
+`docker-compose -f docker-compose.yml up --build`
 OR
 Directly run a shell script "docker-compose-build.sh" in bin/. This will install the PHP, MySQL, Memcached, Drupal, Traefik containers in your local docker container. Once this command successfully setup. No need to run it again as this will store in the user docker container. 
+
 > `shell/docker-compose-build.sh`
 
 **Make your Container ready**
@@ -60,3 +60,7 @@ Now you can access the site in the browser and type [](http://local.drupal.docke
 **Traefik Dashboard**
 URL: (http://localhost:8080/)
 
+
+**REFERENCES**
+
+- https://www.drupal.org/docs/develop/using-composer/

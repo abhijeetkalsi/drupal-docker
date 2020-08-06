@@ -1,0 +1,68 @@
+version: "3"
+services:
+  drupal:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: "${PROJECT_NAME}_drupal"
+    ports:
+      - 8080
+    command:
+      - --port=8080
+    logging:
+      driver: "json-file"
+    links:
+      - "mysql:${PROJECT_BASE_URL}_mysql"
+    volumes:
+      - ./:/var/www/html:cached
+    environment:
+      APACHE_DOCUMENT_ROOT: /var/www/html/web
+      DRUSH_OPTIONS_URI: "${PROJECT_BASE_URL}"
+    labels:
+      - "traefik.docker.network=proxy"
+      - "traefik.http.services.drupal.loadbalancer.server.port=8080"
+      - "traefik.enable=true"
+      - "traefik.http.routers.drupal.rule=Host(`local.drupal.docker.com`)"
+      - "traefik.http.routers.drupal.entrypoints=web"
+      - "traefik.port=80"
+      - "traefik.default.protocol=http"
+    depends_on:
+      - mysql
+
+  # MySQL Container
+  mysql:
+    image: mysql:5.7
+    container_name: "${PROJECT_NAME}_mysql"
+    ports:
+      - 3306
+    command: --max_allowed_packet=128M
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+    volumes:
+      - my_drupal_data:/var/lib/mysql
+    
+  # Traefik Contaniner
+  traefik:
+    image: traefik:v2.0
+    container_name: "${PROJECT_NAME}_traefik"
+    command:
+      - --api.insecure=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+    ports:
+      - "80:80"
+      # Dashboard
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - "traefik.enable=true"
+    depends_on:
+      - drupal
+
+volumes:
+  my_drupal_data:

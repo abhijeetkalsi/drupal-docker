@@ -12,7 +12,7 @@ services:
     logging:
       driver: "json-file"
     links:
-      - "mysql:lifepoints-cms-rds.developer.platone.red"
+      - "mysql:${PROJECT_BASE_URL}_mysql"
     volumes:
       - ./:/var/www/html:cached
     environment:

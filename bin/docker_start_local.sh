@@ -3,15 +3,14 @@
 
 echo -e '\e[1;33m\nRunning Drupal Docker Container ...!\e[0m'
 
-echo -e '\nSetting LP Environment variables...'
-
+echo -e '\nSetting Environment variables...'
 
 #printenv
 
 # Validate Docker Compose file (For testing only)
 #docker-compose -f ../docker-compose.yml config $*
 
-echo -e '\nLoading Docker LP image...'
+echo -e '\nLoading Docker image...'
 # Load and Run Container and image
 docker-compose -f ../docker-compose.yml up -d $*
 

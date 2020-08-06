@@ -22,7 +22,8 @@ If you are using a multi-site and let say the domain is my.example.com added in 
 
 The power mechanism to move database configuration as part of your Code Build
 
-To extract all configuration from your working Drupal instance in your folder inside the working directory. Let say "./config/sync". Do not forget to add configuration YMLs in your repository
+To extract all configuration from your working Drupal instance in your folder inside the working directory. Let say "./config/sync". Do not forget to add configuration YMLs in your repository.
+
 `vendor/bin/drush config-export`
 or
 `vendor/bin/drush --uri=https://lifepointspanel.com cex`

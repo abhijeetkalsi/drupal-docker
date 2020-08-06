@@ -36,7 +36,7 @@ web/sites/simpletest
 /.idea/
 
 # Ignore .env files as they are personal
-.env
+#.env
 .editorconfig
 .gitattributes
 

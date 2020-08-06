@@ -11,6 +11,7 @@ echo -e '\nSetting Environment variables...'
 #docker-compose -f ../docker-compose.yml config $*
 
 echo -e '\nLoading Docker image...'
+
 # Load and Run Container and image
 docker-compose -f ../docker-compose.yml up -d $*
 

@@ -1,4 +1,4 @@
-### Welcome to Drupal Docker - LAMP Stack Container
+### Welcome to Drupal Docker - LAMP Stack Container - A Composer Project
 
 **Composer Install**
 

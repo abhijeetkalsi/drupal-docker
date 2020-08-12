@@ -15,10 +15,11 @@ services:
     volumes:
       - my_drupal_data:/var/lib/mysql
    
+  # Drupal Container
   drupal:
     build:
       context: .
-      dockerfile: docker/Dockerfile
+      dockerfile: Dockerfile
     container_name: "${APP_NAME}-drupal"
     ports:
       - 8080
@@ -31,19 +32,22 @@ services:
     volumes:
       - ./:/var/www/html
     environment:
+      APACHE_LOG_LEVEL: debug
+      APACHE_BACKEND_HOST: php
+      APACHE_VHOST_PRESET: php
       APACHE_DOCUMENT_ROOT: /var/www/html/web
       DRUSH_OPTIONS_URI: "${APP_BASE_URL}"
     labels:
-      - "traefik.docker.network=proxy"
-      - "traefik.http.services.drupal.loadbalancer.server.port=8080"
-      - "traefik.enable=true"
-      - "traefik.http.routers.drupal.rule=Host(`${APP_BASE_URL}`)"
-      - "traefik.http.routers.drupal.entrypoints=web"
-      - "traefik.port=80"
-      - "traefik.default.protocol=http"
+      #- "traefik.docker.network=proxy"
+      #- "traefik.http.services.drupal.loadbalancer.server.port=8080"
+#      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_NAME}-drupal.rule=Host(`${APP_BASE_URL}`)"
+      #- "traefik.http.routers.drupal.entrypoints=web"
+      #- "traefik.port=80"
+      #- "traefik.default.protocol=http"
     depends_on:
       - mysql
- 
+
   # Traefik Contaniner
   traefik:
     image: traefik:v2.0
@@ -51,11 +55,11 @@ services:
     command:
       - --api.insecure=true
       - --providers.docker=true
-      - --providers.docker.exposedbydefault=false
-      - --entrypoints.web.address=:80
+      #- --providers.docker.exposedbydefault=false
+      #- --entrypoints.web.address=:80
     ports:
-      - "80:80"
-      # Dashboard
+      - "5000:80"
+      # Traefik Dashboard
       - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

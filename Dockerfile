@@ -79,12 +79,15 @@ RUN \
         git \
         curl
 
+# Install composer program in container.
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
     php composer-setup.php && \
     mv composer.phar /usr/local/bin/composer && \
     php -r "unlink('composer-setup.php');"
 
 
+# A small wrapper around Drush for your global $PATH
+# Drush is more convenient than to type vendor/bin/drush in order to execute Drush commands.
 RUN wget -O drush.phar https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar && \
     chmod +x drush.phar && \
     mv drush.phar /usr/local/bin/drush
@@ -97,6 +100,9 @@ RUN wget -O drush.phar https://github.com/drush-ops/drush-launcher/releases/down
     # chown -R www-data /var/www/web/sites/*/files && \
  #   chmod +x /usr/local/bin/* && \
 
+# Move existing Drupal code to container.
 ADD ./ /var/www/html
+
+# Intall all Composer dependency on each build.
 RUN cd /var/www/html && \
     composer install

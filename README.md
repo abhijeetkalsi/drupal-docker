@@ -20,7 +20,7 @@
  - Mount custom modules, themes, or configuration directories via Docker volumes.
  - Extend the Drupal image with a custom Dockerfile for additional PHP extensions or tools.
  
-### Welcome to Drupal Docker - LAMP Stack Container - A Composer Project
+## Welcome to Drupal Docker - LAMP Stack Container - A Composer Project
 
 * Build images and start your docker containers 
 > `docker-compose up -d`
@@ -34,7 +34,7 @@ Later, once your containers are built :
 > `docker-compose exec drupal bash`
   
 
-**Composer Install**
+### Composer Install
 
 > `composer install`
 
@@ -44,7 +44,7 @@ Later, once your containers are built :
 
 Please refer to example.env to how to work on environment variable using `.ENV` file
 
-**DRUSH**
+### DRUSH
 
 > `vendor/bin/drush cache-rebuild`
 
@@ -54,14 +54,14 @@ If you are using a multi-site and let say the domain is my.example.com added in 
 
 ### Configuration Management
 
-The power mechanism to move database configuration as part of your Code Build
+The power mechanism to move the database configuration as part of your Code Build
 
-To extract all configuration from your working Drupal instance in your folder inside the working directory. Let say "./config/sync". Do not forget to add configuration YMLs in your repository
+To extract all configuration from your working Drupal instance in your folder inside the working directory. Let say "./config/sync". Do not forget to add configuration YMLs to your repository
 > `vendor/bin/drush config-export`
 or
 > `vendor/bin/drush cex`
 
-The team will able to update there local instance or to update your Environment  container instance.
+The team will be able to update their local instance or update the Environment  container instance.
 > `vendor/bin/drush config-import`
 or
 > `vendor/bin/drush cim`
@@ -89,11 +89,8 @@ Directly run a shell script "docker-compose-build.sh" in bin/. This will install
 
 
 **Browse the browser**
-Now you can access the site in the browser and type [](http://local.drupal.docker.com). Then all set up.
-
-**Traefik Dashboard**
-URL: (http://localhost:8080/)
-
+Now you can access the site in the browser and type [](http://localhost/). Then all set up.
+PHP My Admin http://localhost:8081/
 
 **REFERENCES**
 

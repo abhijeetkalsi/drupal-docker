@@ -1,4 +1,3 @@
-/**
  * Drupal Docker Setup
  *
  * This setup provides a Docker-based environment for running and developing Drupal applications.
@@ -16,7 +15,7 @@
  * 3. Run `docker-compose up -d` to start the containers.
  * 4. Access Drupal at http://localhost:8080 (or configured port).
  *
- * Customization:
+ * Customisation:
  * - Add additional services (e.g., Redis, Solr) as needed.
  * - Mount custom modules, themes, or configuration directories via Docker volumes.
  * - Extend the Drupal image with a custom Dockerfile for additional PHP extensions or tools.
@@ -24,8 +23,13 @@
  * References:
  * - https://www.drupal.org/docs/develop/local-server-setup/docker
  * - https://hub.docker.com/_/drupal
- */
+     
 ### Welcome to Drupal Docker - LAMP Stack Container - A Composer Project
+
+**Docker Install**
+
+> `docker compose up -d`
+
 
 **Composer Install**
 

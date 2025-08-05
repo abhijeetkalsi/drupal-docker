@@ -15,7 +15,7 @@
  3. Run `docker-compose up -d` to start the containers.
  4. Access Drupal at http://localhost:8080 (or configured port).
  
- ## Customization:
+ ## Customisation:
  - Add additional services (e.g., Redis, Solr) as needed.
  - Mount custom modules, themes, or configuration directories via Docker volumes.
  - Extend the Drupal image with a custom Dockerfile for additional PHP extensions or tools.
@@ -79,7 +79,7 @@ or
 
 `docker-compose -f docker-compose.yml up --build`
 OR
-Directly run a shell script "docker-compose-build.sh" in bin/. This will install the PHP, MySQL, Memcached, Drupal, Traefik containers in your local docker container. Once this command successfully setup. No need to run it again as this will store in the user docker container. 
+Directly run a shell script "docker-compose-build.sh" in bin/. This will install the PHP, MySQL, Memcached, Drupal, and Traefik containers in your local Docker container. Once this command is successfully set up. No need to run it again as this will be stored in the user's Docker container. 
 
 > `shell/docker-compose-build.sh`
 
@@ -89,7 +89,7 @@ Directly run a shell script "docker-compose-build.sh" in bin/. This will install
 
 
 **Browse the browser**
-Now you can access the site in the browser and type [](http://localhost/). Then all set up.
+Now you can access the site in the browser and type http://localhost/. Then all set up.
 PHP My Admin http://localhost:8081/
 
 **REFERENCES**

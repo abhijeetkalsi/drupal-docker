@@ -46,6 +46,10 @@ RUN add-apt-repository ppa:ondrej/php \
 # Enable Apache modules
 RUN a2enmod rewrite proxy proxy_http
 
+# Change Apache web root to /var/www/html/web
+RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/web|g' /etc/apache2/sites-available/000-default.conf \
+ && sed -i 's|<Directory /var/www/html/>|<Directory /var/www/html/web/>|g' /etc/apache2/apache2.conf  
+
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php \
  && mv composer.phar /usr/local/bin/composer
@@ -57,8 +61,8 @@ RUN composer global require drush/drush \
 #================================================
 # Set working directory and permissions
 WORKDIR /var/www/html
-RUN useradd -ms /bin/bash apache \
- && chown -R apache:apache /var/www/html/
+RUN chown -R www-data:www-data /var/www/html/
+RUN chmod -R 755 /var/www/html/
 
 # ================================================
 # Copy composer depndencies

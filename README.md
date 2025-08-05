@@ -1,3 +1,30 @@
+/**
+ * Drupal Docker Setup
+ *
+ * This setup provides a Docker-based environment for running and developing Drupal applications.
+ *
+ * Features:
+ * - Uses official Drupal and supporting service images (e.g., MySQL, PostgreSQL).
+ * - Supports local development with automatic file syncing and port mapping.
+ * - Easily configurable for different Drupal versions and database backends.
+ * - Includes recommended volumes for persistent storage of files and database data.
+ * - Example configuration for environment variables (database credentials, site settings).
+ *
+ * Usage:
+ * 1. Copy the provided docker-compose.yml and .env.example files to your project root.
+ * 2. Adjust environment variables as needed for your local setup.
+ * 3. Run `docker-compose up -d` to start the containers.
+ * 4. Access Drupal at http://localhost:8080 (or configured port).
+ *
+ * Customization:
+ * - Add additional services (e.g., Redis, Solr) as needed.
+ * - Mount custom modules, themes, or configuration directories via Docker volumes.
+ * - Extend the Drupal image with a custom Dockerfile for additional PHP extensions or tools.
+ *
+ * References:
+ * - https://www.drupal.org/docs/develop/local-server-setup/docker
+ * - https://hub.docker.com/_/drupal
+ */
 ### Welcome to Drupal Docker - LAMP Stack Container - A Composer Project
 
 **Composer Install**

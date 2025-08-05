@@ -1,68 +1,75 @@
-version: "3"
 services:
-  # MySQL Container
-  mysql:
-    image: mysql:5.6
-    container_name: "${APP_NAME}-mysql"
-    ports:
-      - "${MYSQL_PORT}"
-    command: --max_allowed_packet=128M
-    environment:
-      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
-      MYSQL_USER: "${MYSQL_USER}"
-      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
-      MYSQL_DATABASE: "${MYSQL_DATABASE}"
-    volumes:
-      - my_drupal_data:/var/lib/mysql
-   
   drupal:
     build:
-      context: .
-      dockerfile: docker/Dockerfile
-    container_name: "${APP_NAME}-drupal"
-    ports:
-      - 8080
-    command:
-      - --port=8080
-    logging:
-      driver: "json-file"
-    links:
-      - "mysql:${APP_BASE_URL}_mysql"
-    volumes:
-      - ./:/var/www/html
+      dockerfile: Dockerfile
+    container_name: "${PROJECT_NAME}_drupal"
     environment:
-      APACHE_DOCUMENT_ROOT: /var/www/html/web
-      DRUSH_OPTIONS_URI: "${APP_BASE_URL}"
-    labels:
-      - "traefik.docker.network=proxy"
-      - "traefik.http.services.drupal.loadbalancer.server.port=8080"
-      - "traefik.enable=true"
-      - "traefik.http.routers.drupal.rule=Host(`${APP_BASE_URL}`)"
-      - "traefik.http.routers.drupal.entrypoints=web"
-      - "traefik.port=80"
-      - "traefik.default.protocol=http"
-    depends_on:
-      - mysql
- 
-  # Traefik Contaniner
-  traefik:
-    image: traefik:v2.0
-    container_name: "${APP_NAME}-traefik"
-    command:
-      - --api.insecure=true
-      - --providers.docker=true
-      - --providers.docker.exposedbydefault=false
-      - --entrypoints.web.address=:80
+      COMPOSER_ALLOW_SUPERUSER: 1
+      APACHE_DOCUMENT_ROOT: /var/www/html/web # Drupal web root
+      DB_HOST: $DB_HOST
+      DB_PORT: $DB_PORT
+      DB_USER: $DB_USER
+      DB_PASSWORD: $DB_PASSWORD
+      DB_NAME: $DB_NAME
+      DB_DRIVER: $DB_DRIVER
+      PHP_POST_MAX_SIZE: 512M
+      PHP_UPLOAD_MAX_FILESIZE: 512M
+      PHP_MAX_EXECUTION_TIME: 240
+      PHP_MEMORY_LIMIT: 512M
+      PHP_DISPLAY_ERRORS: 1
+      PHP_ERROR_REPORTING: E_ALL
+      DRUSH_OPTIONS_URI: "http://${PROJECT_BASE_URL}:8080"
+      COLUMNS: 80 # Set 80 columns for docker exec -it.
+    volumes:
+      - ./web/modules/custom:/var/www/html/web/modules/custom # custom modules
+      - ./web/themes/custom:/var/www/html/web/themes/custom # custom themes
+      - ./web/sites:/var/www/html/web/sites # sites directory
+      - ./web/libraries:/var/www/html/web/libraries # libraries directory
+      - ./web/profiles/custom:/var/www/html/web/profiles/custom # custom profiles
+      - ./config:/var/www/html/config:consistent # site configuration
+      - ./composer.json:/var/www/html/composer.json # composer file
+      - ./composer.lock:/var/www/html/composer.lock # composer lock file
     ports:
       - "80:80"
-      # Dashboard
-      - "8080:8080"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    labels:
-      - "traefik.enable=true"
     depends_on:
-      - drupal
+      - mysql
+    networks:
+      - drupalnet
+
+  mysql:
+    image: mariadb:10.6
+    container_name: "${PROJECT_NAME}_mysql"
+    restart: always
+    stop_grace_period: 30s
+    environment:
+      MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+      MYSQL_DATABASE: $DB_NAME
+      MYSQL_USER: $DB_USER
+      MYSQL_PASSWORD: $DB_PASSWORD
+    # volumes:
+    #   - data:/var/lib/mysql
+    networks:
+      - drupalnet
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: "${PROJECT_NAME}_pma"
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: $DB_PORT
+      PMA_USER: $DB_USER
+      PMA_PASSWORD: $DB_PASSWORD
+      PHP_UPLOAD_MAX_FILESIZE: 1G
+      PHP_MAX_INPUT_VARS: 1G
+    depends_on:
+      - mysql
+    networks:
+      - drupalnet
 
 volumes:
-  my_drupal_data:
+  dbdata:
+
+networks:
+  drupalnet:

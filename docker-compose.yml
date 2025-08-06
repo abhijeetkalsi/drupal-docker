@@ -46,14 +46,15 @@ services:
       MYSQL_DATABASE: $DB_NAME
       MYSQL_USER: $DB_USER
       MYSQL_PASSWORD: $DB_PASSWORD
-    volumes:
-      - dbdata:/var/lib/mysql
+    # volumes:
+    #   - mysql:/var/lib/mysql
     networks:
       - drupalnet
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: "${PROJECT_NAME}_pma"
+    restart: always
     ports:
       - "8081:80"
     environment:

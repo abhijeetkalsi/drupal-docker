@@ -44,7 +44,7 @@ RUN add-apt-repository ppa:ondrej/php \
     libapache2-mod-php8.4
 
 # Enable Apache modules
-RUN a2enmod rewrite proxy proxy_http
+RUN a2enmod rewrite
 
 # Change Apache web root to /var/www/html/web
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/web|g' /etc/apache2/sites-available/000-default.conf \

@@ -22,7 +22,7 @@
  
 ## Welcome to Drupal Docker - LAMP Stack Container - A Composer Project
 
-* Build images and start your docker containers 
+* Build images and start your Docker containers 
 > `docker-compose up -d`
         
 Later, once your containers are built : 
@@ -42,7 +42,7 @@ Later, once your containers are built :
 **Environment Variable**
 
 
-Please refer to example.env to how to work on environment variable using `.ENV` file
+Please refer to example.env to how to work on environment variables using `.ENV` file
 
 ### DRUSH
 
@@ -59,12 +59,12 @@ The power mechanism to move the database configuration as part of your Code Buil
 To extract all configuration from your working Drupal instance in your folder inside the working directory. Let say "./config/sync". Do not forget to add configuration YMLs to your repository
 > `vendor/bin/drush config-export`
 or
-> `vendor/bin/drush cex`
+> `drush cex`
 
 The team will be able to update their local instance or update the Environment  container instance.
 > `vendor/bin/drush config-import`
 or
-> `vendor/bin/drush cim`
+> `drush cim`
 
 
 **Drupal recommended Update**
@@ -89,8 +89,8 @@ Directly run a shell script "docker-compose-build.sh" in bin/. This will install
 
 
 **Browse the browser**
-Now you can access the site in the browser and type http://localhost/. Then all set up.
-PHP My Admin http://localhost:8081/
+Now you can access the site in your browser by typing http://localhost/. Then all set up.
+**PHP My Admin*** http://localhost:8081/
 
 **REFERENCES**
 

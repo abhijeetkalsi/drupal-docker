@@ -38,6 +38,7 @@ Later, once your containers are built :
 
 > `composer install`
 
+![Alt text](/bin/docker-container-screenshot.png?raw=true "Optional Title")
 
 **Environment Variable**
 

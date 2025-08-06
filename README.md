@@ -1,5 +1,7 @@
 # Drupal Docker Setup
- 
+
+![Alt text](/bin/drupal_plus_docker.jpg?raw=true "Optional Title")
+
  This setup provides a Docker-based environment for running and developing Drupal applications.
 
  Features:

@@ -32,13 +32,14 @@ Later, once your containers are built :
 
 * Connect to your php container with :
 > `docker-compose exec drupal bash`
-  
+
+### Docker Desktop Screenshot
+
+![Alt text](/bin/docker-container-screenshot.png?raw=true "Optional Title")
 
 ### Composer Install
 
 > `composer install`
-
-![Alt text](/bin/docker-container-screenshot.png?raw=true "Optional Title")
 
 **Environment Variable**
 

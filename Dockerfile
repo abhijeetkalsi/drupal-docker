@@ -48,15 +48,17 @@ RUN a2enmod rewrite
 
 # Change Apache web root to /var/www/html/web
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/web|g' /etc/apache2/sites-available/000-default.conf \
- && sed -i 's|<Directory /var/www/html/>|<Directory /var/www/html/web/>|g' /etc/apache2/apache2.conf  
+ && sed -i 's|<Directory /var/www/>|<Directory /var/www/html/web/>|g' /etc/apache2/apache2.conf \
+ && sed -i 's|AllowOverride None|AllowOverride All|g' /etc/apache2/apache2.conf
 
+#================================================
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php \
  && mv composer.phar /usr/local/bin/composer
 
 # Install Drush globally (Drupal CLI)
 RUN composer global require drush/drush \
- && ln -s ~/.composer/vendor/bin/drush /usr/local/bin/drush
+ &&  ln -s /var/www/html/vendor/bin/drush /usr/local/bin/drush
 
 #================================================
 # Set working directory and permissions
@@ -67,6 +69,10 @@ RUN chmod -R 755 /var/www/html/
 # ================================================
 # Copy composer depndencies
 COPY ./composer.json /var/www/html/composer.json
+COPY ./composer.lock /var/www/html/composer.lock
+
+# Copy default .htaccess for Drupal (ensure you have this file in your context)
+COPY ./web/.htaccess /var/www/html/web/.htaccess
 COPY ./composer.lock /var/www/html/composer.lock
 
 #================================================

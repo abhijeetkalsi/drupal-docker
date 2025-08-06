@@ -3,6 +3,7 @@ services:
     build:
       dockerfile: Dockerfile
     container_name: "${PROJECT_NAME}_drupal"
+    restart: always
     environment:
       COMPOSER_ALLOW_SUPERUSER: 1
       APACHE_DOCUMENT_ROOT: /var/www/html/web # Drupal web root
